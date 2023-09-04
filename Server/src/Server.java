@@ -1,26 +1,27 @@
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Server {
     public static void main(String[] a) throws IOException {
         try {
-            ServerSocket server = new ServerSocket(3636);
-            System.out.println("Server openned : 3636 ");
-            Socket costumer = server.accept();
-            System.out.println("Costumer logged on  "+costumer.getInetAddress().
-                    getHostAddress());
-            Scanner s = new Scanner(costumer.getInputStream());
-            while(s.hasNextLine()){
-                System.out.println(s.nextLine());
+
+            ServerSocket serverSocket = new ServerSocket(3636);
+            System.out.println("Server oppened on : 3636");
+
+            while(true) {
+
+                Socket clientSocket = serverSocket.accept();
+
+                ClientHandler handler = new ClientHandler(clientSocket);
+                Thread thread = new Thread(handler);
+                thread.start();
+
             }
 
-            s.close();
-            server.close();
-        }catch(IOException ex){
+        } catch (IOException ex) {
             Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
         }
 
