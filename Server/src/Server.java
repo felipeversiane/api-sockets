@@ -11,7 +11,7 @@ public class Server {
             ServerSocket server = new ServerSocket(3636);
             System.out.println("Server openned : 3636 ");
             Socket costumer = server.accept();
-            System.out.println("Cliente conectado do IP "+costumer.getInetAddress().
+            System.out.println("Costumer logged on  "+costumer.getInetAddress().
                     getHostAddress());
             Scanner s = new Scanner(costumer.getInputStream());
             while(s.hasNextLine()){
